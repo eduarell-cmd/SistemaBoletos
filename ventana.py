@@ -14,11 +14,12 @@ class Ventana(QWidget):
     def inicializarUI(self):
         self.setGeometry(100, 100, 1300, 800)
         self.setWindowTitle("Boletitos")
-        self.layout = QVBoxLayout()
+        self.layout = QGridLayout()  # Cambiamos a QGridLayout para organizar en filas y columnas
         self.setLayout(self.layout)
         self.show()
 
     def cuadritos(self):
+        # Creamos 8 etiquetas con imágenes
         image_paths = [
             "images/kendrick.jpg",
             "images/latinmafia.jpg",
@@ -29,30 +30,23 @@ class Ventana(QWidget):
             "images/miko.jpg",
             "images/ote.jpg",
         ]
+        for i in range(8):
+            label = QLabel(self)  # Creamos una nueva etiqueta
+            label.setFixedSize(200, 200)
 
-        h_layout = QHBoxLayout()  # Layout horizontal para alinearlas en fila
-        h_layout.setAlignment(Qt.AlignmentFlag.AlignCenter)  # Centrar imágenes
-
-        for path in image_paths:
-            label = QLabel(self)
-            label.setFixedSize(150, 150)  # Tamaño ajustable para cada imagen
-            pixmap = QPixmap(path)
-
-            # Ajustar el tamaño de la imagen manteniendo relación de aspecto
-            pixmap = pixmap.scaled(
-                label.size(),
-                Qt.AspectRatioMode.KeepAspectRatio,
-                Qt.TransformationMode.SmoothTransformation,
-            )
-
+            # Cargamos la imagen (puedes personalizar las imágenes con una lista si quieres diferentes)
+            pixmap = QPixmap(image_paths[i])
+            pixmap = pixmap.scaled(label.size(), Qt.AspectRatioMode.KeepAspectRatio, Qt.TransformationMode.SmoothTransformation)
             label.setPixmap(pixmap)
             label.setScaledContents(True)
-            h_layout.addWidget(label)
 
-        self.layout.addLayout(h_layout)
+            # Añadimos la etiqueta al grid (2 filas x 4 columnas)
+            fila = i // 4
+            columna = i % 4
+            self.layout.addWidget(label, fila, columna)
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     app = QApplication(sys.argv)
     ventana = Ventana()
     sys.exit(app.exec())
