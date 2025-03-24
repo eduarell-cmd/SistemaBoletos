@@ -32,5 +32,3 @@ if __name__ == '__main__':
     app=QApplication(sys.argv)
     ventana=Ventana()
     sys.exit(app.exec())
-
-    
